@@ -1,0 +1,21 @@
+{
+  "apiary_id": "hive-observatory-pa",
+  "name": "Dusk Apiary Observatory",
+  "region": "Pocono Plateau, Pennsylvania, USA",
+  "climate": "Dfb (warm-summer humid continental)",
+  "elevation_m": 280,
+  "hives": [
+    { "hive_id": "hive3", "type": "Langstroth 10-frame", "sensor_unit_id": "hive3-bme688-a" }
+  ],
+  "sensors": [
+    {
+      "unit_id": "hive3-bme688-a",
+      "part": "BME688",
+      "module": "Seengreat/Xicoolee BME688 breakout, RT9193-33 regulator, I2C 0x77",
+      "installed_utc": "2026-09-08T00:00:00Z",
+      "heater_profile": "HP-354",
+      "enclosure": "sensor inside the hive body; ESP32-S3 in a vented box outside"
+    }
+  ],
+  "notes": "Three-hive apiary with weight, CO2, acoustics, bee counting and a weather station. The BME688 is on hive3."
+}

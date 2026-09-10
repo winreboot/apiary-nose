@@ -1,0 +1,64 @@
+name: Smell submission
+description: Share a labelled recording session without using git
+title: "[session] "
+labels: ["submission"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Attach your session JSON below (drag it into the text box). A maintainer will
+        validate it and file it under `data/<your-apiary-id>/sessions/`.
+  - type: input
+    id: apiary
+    attributes:
+      label: Apiary id
+      description: Short, lower-case, stable. e.g. bienenhof-nrw
+    validations:
+      required: true
+  - type: input
+    id: label
+    attributes:
+      label: What is the label?
+      description: e.g. "nectar flow", "robbing", "ambient hive air", "lemongrass oil"
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Kind
+      options:
+        - reference
+        - colony
+        - ambient
+    validations:
+      required: true
+  - type: dropdown
+    id: confidence
+    attributes:
+      label: How sure are you that the label is right?
+      options:
+        - certain
+        - unsure
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: What was happening?
+      description: Weather, colony state, how the smell was presented, anything odd.
+    validations:
+      required: true
+  - type: input
+    id: sensor
+    attributes:
+      label: Sensor and burn-in
+      description: e.g. BME688 on an Adafruit breakout, ~200 h powered
+    validations:
+      required: true
+  - type: textarea
+    id: file
+    attributes:
+      label: Session file
+      description: Drag the .json here. Run tools/validate.py on it first if you can.
+    validations:
+      required: true

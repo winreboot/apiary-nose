@@ -1,0 +1,6 @@
+{
+  "apiary_id": "example-synthetic",
+  "name": "Format example (not a real apiary)",
+  "region": "n/a",
+  "notes": "These files exist so contributors can see the shape of a valid session. The numbers are generated, not measured. tools/validate.py accepts them; no model should be trained on them."
+}

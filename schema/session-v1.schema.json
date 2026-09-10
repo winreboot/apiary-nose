@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://winreboot.github.io/apiary-nose/schema/session-v1.schema.json",
+  "title": "Apiary Nose session",
+  "type": "object",
+  "required": ["schema_version", "apiary_id", "label", "label_kind", "sensor", "started_utc", "scans"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "apiary_id": { "type": "string", "pattern": "^[a-z0-9-]{3,40}$" },
+    "hive_id": { "type": "string", "maxLength": 40 },
+    "label": { "type": "string", "minLength": 2, "maxLength": 60 },
+    "label_kind": { "enum": ["reference", "colony", "ambient"] },
+    "confidence": { "enum": ["certain", "unsure"] },
+    "notes": { "type": "string", "maxLength": 2000 },
+    "firmware": { "type": "string", "maxLength": 80 },
+    "started_utc": { "type": "string", "format": "date-time" },
+    "ended_utc": { "type": "string", "format": "date-time" },
+    "sensor": {
+      "type": "object",
+      "required": ["part", "unit_id", "steps_c"],
+      "properties": {
+        "part": { "type": "string" },
+        "unit_id": { "type": "string", "maxLength": 60 },
+        "heater_profile": { "type": "string" },
+        "steps_c": {
+          "type": "array", "minItems": 10, "maxItems": 10,
+          "items": { "type": "number", "minimum": 20, "maximum": 450 }
+        },
+        "burn_in_hours": { "type": "number", "minimum": 0 },
+        "enclosure": { "type": "string", "maxLength": 300 }
+      }
+    },
+    "scans": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["t_utc", "g_kohm"],
+        "properties": {
+          "t_utc": { "type": "string", "format": "date-time" },
+          "g_kohm": {
+            "type": "array", "minItems": 10, "maxItems": 10,
+            "items": { "type": ["number", "null"], "minimum": 0 }
+          },
+          "temp_c": { "type": ["number", "null"] },
+          "rh_pct": { "type": ["number", "null"] },
+          "hpa": { "type": ["number", "null"] }
+        }
+      }
+    }
+  }
+}
