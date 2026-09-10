@@ -3,47 +3,218 @@
   "$id": "https://winreboot.github.io/apiary-nose/schema/session-v1.schema.json",
   "title": "Apiary Nose session",
   "type": "object",
-  "required": ["schema_version", "apiary_id", "label", "label_kind", "sensor", "started_utc", "scans"],
+  "required": [
+    "schema_version",
+    "apiary_id",
+    "label",
+    "label_kind",
+    "sensor",
+    "started_utc",
+    "scans"
+  ],
   "properties": {
-    "schema_version": { "const": 1 },
-    "apiary_id": { "type": "string", "pattern": "^[a-z0-9-]{3,40}$" },
-    "hive_id": { "type": "string", "maxLength": 40 },
-    "label": { "type": "string", "minLength": 2, "maxLength": 60 },
-    "label_kind": { "enum": ["reference", "colony", "ambient"] },
-    "confidence": { "enum": ["certain", "unsure"] },
-    "notes": { "type": "string", "maxLength": 2000 },
-    "firmware": { "type": "string", "maxLength": 80 },
-    "started_utc": { "type": "string", "format": "date-time" },
-    "ended_utc": { "type": "string", "format": "date-time" },
+    "schema_version": {
+      "const": 1
+    },
+    "apiary_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]{3,40}$"
+    },
+    "hive_id": {
+      "type": "string",
+      "maxLength": 40
+    },
+    "label": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 60
+    },
+    "label_kind": {
+      "enum": [
+        "reference",
+        "colony",
+        "ambient"
+      ]
+    },
+    "confidence": {
+      "enum": [
+        "certain",
+        "unsure"
+      ]
+    },
+    "notes": {
+      "type": "string",
+      "maxLength": 2000
+    },
+    "firmware": {
+      "type": "string",
+      "maxLength": 80
+    },
+    "started_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "ended_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
     "sensor": {
       "type": "object",
-      "required": ["part", "unit_id", "steps_c"],
+      "required": [
+        "part",
+        "unit_id",
+        "steps_c"
+      ],
       "properties": {
-        "part": { "type": "string" },
-        "unit_id": { "type": "string", "maxLength": 60 },
-        "heater_profile": { "type": "string" },
-        "steps_c": {
-          "type": "array", "minItems": 10, "maxItems": 10,
-          "items": { "type": "number", "minimum": 20, "maximum": 450 }
+        "part": {
+          "type": "string"
         },
-        "burn_in_hours": { "type": "number", "minimum": 0 },
-        "enclosure": { "type": "string", "maxLength": 300 }
+        "unit_id": {
+          "type": "string",
+          "maxLength": 60
+        },
+        "heater_profile": {
+          "type": "string"
+        },
+        "steps_c": {
+          "type": "array",
+          "minItems": 10,
+          "maxItems": 10,
+          "items": {
+            "type": "number",
+            "minimum": 20,
+            "maximum": 450
+          }
+        },
+        "burn_in_hours": {
+          "type": "number",
+          "minimum": 0
+        },
+        "enclosure": {
+          "type": "string",
+          "maxLength": 300
+        }
       }
     },
     "scans": {
-      "type": "array", "minItems": 1,
+      "type": "array",
+      "minItems": 1,
       "items": {
         "type": "object",
-        "required": ["t_utc", "g_kohm"],
+        "required": [
+          "t_utc",
+          "g_kohm"
+        ],
         "properties": {
-          "t_utc": { "type": "string", "format": "date-time" },
-          "g_kohm": {
-            "type": "array", "minItems": 10, "maxItems": 10,
-            "items": { "type": ["number", "null"], "minimum": 0 }
+          "t_utc": {
+            "type": "string",
+            "format": "date-time"
           },
-          "temp_c": { "type": ["number", "null"] },
-          "rh_pct": { "type": ["number", "null"] },
-          "hpa": { "type": ["number", "null"] }
+          "g_kohm": {
+            "type": "array",
+            "minItems": 10,
+            "maxItems": 10,
+            "items": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0
+            }
+          },
+          "temp_c": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "rh_pct": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "hpa": {
+            "type": [
+              "number",
+              "null"
+            ]
+          }
+        }
+      }
+    },
+    "site": {
+      "type": "object",
+      "description": "Coarse location and hive type. Region, never an address.",
+      "properties": {
+        "region": {
+          "type": "string",
+          "maxLength": 120
+        },
+        "climate": {
+          "type": "string",
+          "maxLength": 80
+        },
+        "elevation_m": {
+          "type": "number"
+        },
+        "hive_type": {
+          "type": "string",
+          "maxLength": 80
+        }
+      }
+    },
+    "conditions": {
+      "type": "object",
+      "description": "Conditions during the session. A MOX baseline moves with temperature and humidity, so these are what make one apiary's fingerprints comparable with another's.",
+      "properties": {
+        "in_hive_temp_c": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "in_hive_rh_pct": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "in_hive_hpa": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "outdoor_temp_c": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "outdoor_rh_pct": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "outdoor_conditions": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "wind_mph": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "pressure_trend": {
+          "type": [
+            "string",
+            "null"
+          ]
         }
       }
     }

@@ -63,3 +63,23 @@ Bosch **BME AI-Studio** imports its own `.bmerawdata` files. The community proje
 [notyourtree/bme688-aistudio-setup](https://github.com/notyourtree/bme688-aistudio-setup)
 documents importing raw breakout data into AI-Studio; the CSV above carries every field
 that path needs. A direct `.bmerawdata` writer is an open task — see the issues.
+
+## `site` and `conditions` (added by the exporter)
+
+Both are filled in automatically and both matter more than they look:
+
+```json
+"site": { "region": "Pocono Plateau, Pennsylvania, USA",
+          "climate": "Dfb (warm-summer humid continental)",
+          "elevation_m": 280, "hive_type": "Langstroth 10-frame" },
+"conditions": { "in_hive_temp_c": 25.0, "in_hive_rh_pct": 58.0, "in_hive_hpa": 1004.0,
+                "outdoor_temp_c": 21.9, "outdoor_conditions": "partly cloudy",
+                "wind_mph": 6.5, "pressure_trend": "rising" }
+```
+
+A metal-oxide sensor's baseline moves with temperature and humidity. Two fingerprints
+recorded at 15 °C and 30 °C differ even with identical air, so a session without
+conditions cannot be compared with anyone else's - and a model trained across apiaries
+needs them as inputs, not footnotes.
+
+Keep `site.region` coarse. Region and climate zone, never an address.
