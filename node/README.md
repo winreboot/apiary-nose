@@ -62,7 +62,7 @@ learning it as hidden variance.
 
 ## Contribute what it records
 
-Sessions export in the [Apiary Nose](https://github.com/winreboot/apiary-nose) format —
+Sessions export in the [Apiary Nose](../..) format —
 an open dataset of beehive smells collected from working hives. A metal-oxide sensor's
 readings are specific to its own chip, so a model that generalises needs data from many
 sensors and many places. If you record something interesting, that project would like to

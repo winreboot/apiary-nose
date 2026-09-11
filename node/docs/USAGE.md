@@ -59,7 +59,7 @@ expect.
 
 ## Contributing
 
-The export format matches the [Apiary Nose](https://github.com/winreboot/apiary-nose)
+The export format matches the [Apiary Nose](../..)
 dataset. Validate a file with that repository's `tools/validate.py`, then open a pull
 request or attach it to a submission issue.
 
