@@ -10,6 +10,8 @@ This project is an attempt to change that, and it needs more than one apiary to 
 
 ---
 
+![A recorded session: ten heater steps per scan, over time. Brighter means more gas at that temperature.](docs/img/spectrogram.png)
+
 ## The sensor
 
 The [Bosch **BME688**](https://www.bosch-sensortec.com/products/environmental-sensors/gas-sensors/bme688/)
@@ -122,6 +124,13 @@ from people who think this whole idea is unlikely to work. Skepticism improves i
 
 ---
 
+## Build a sensor
+
+[`node/`](node/) has everything for a standalone recorder: a wiring diagram, firmware for
+an ESP32-S3, and a web page served by the board itself — no server, no database. Its
+exports match the session format used here, so anything it records can be contributed
+straight back.
+
 ## What is in this repository
 
 ```
@@ -157,11 +166,3 @@ data chose to.
 
 Data: [CC BY 4.0](LICENSE-DATA) — use it, publish on it, credit the apiary it came
 from. Tools: [MIT](LICENSE).
-
-## Build a sensor
-
-[`node/`](node/) has everything for a standalone recorder: a wiring diagram, firmware for
-an ESP32-S3, and a web page served by the board itself — no server, no database. Its
-exports match the session format used here, so anything it records can be contributed
-straight back.
-
