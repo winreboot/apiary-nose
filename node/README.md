@@ -9,6 +9,8 @@ board's address and it is all there.
 
 ![wiring](docs/wiring.svg)
 
+![the page the board serves](../docs/img/nose-page.png)
+
 ## What it records
 
 The BME688's gas element sits on a heater that steps through ten temperatures, about
