@@ -139,6 +139,14 @@
               "number",
               "null"
             ]
+          },
+          "burst_pos": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 1,
+            "description": "Position of this scan within its burst. 1 = the first scan after the sensor rested, which reads far higher because the sensing surface recovered during the pause. Treat it as a feature, not noise."
           }
         }
       }

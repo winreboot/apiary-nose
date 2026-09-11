@@ -83,3 +83,22 @@ conditions cannot be compared with anyone else's - and a model trained across ap
 needs them as inputs, not footnotes.
 
 Keep `site.region` coarse. Region and climate zone, never an address.
+
+## `burst_pos` - the variable that will fool you
+
+The BME688 under BSEC does not scan continuously. It runs a burst of scans about
+11 s apart, then rests for roughly a minute and a half. During the rest the sensing
+surface recovers, so **the first scan after a pause reads about ten times higher** than
+the last scan before it, and the scans between decay toward equilibrium.
+
+Measured on one node: bursts of five scans, 150 s cycle, peak-to-trough ratio ~10x.
+
+That swing is larger than most smells produce. A model trained without it learns
+"where in the burst am I" as readily as "what is in the air", and its accuracy
+collapses on anyone else's cadence. So every scan carries `burst_pos`:
+
+- **1** - first scan after a rest. Highest resistances. Not comparable with the rest.
+- **2, 3, ...** - progressively settled.
+
+Use it as an input feature, or filter to `burst_pos >= 2` before training. Do not
+silently average across positions.
