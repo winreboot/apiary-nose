@@ -1,5 +1,8 @@
 # Apiary Nose
 
+<img src="docs/img/apiary-nose-avatar.png" width="120" align="right" alt="">
+
+
 **An open dataset of what beehives smell like — and an invitation to help build it.**
 
 Beekeepers already use their noses. The sweet smell of a nectar flow, the sharp banana
