@@ -157,3 +157,11 @@ data chose to.
 
 Data: [CC BY 4.0](LICENSE-DATA) — use it, publish on it, credit the apiary it came
 from. Tools: [MIT](LICENSE).
+
+## Build a sensor
+
+[`node/`](node/) has everything for a standalone recorder: a wiring diagram, firmware for
+an ESP32-S3, and a web page served by the board itself — no server, no database. Its
+exports match the session format used here, so anything it records can be contributed
+straight back.
+
