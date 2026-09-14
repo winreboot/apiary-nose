@@ -43,7 +43,22 @@
  *    and browse to the address it prints. Bosch advise 24-48 h of continuous
  *    running on a new sensor before the gas readings settle.
  *
- *  v1.0.0
+ *  WHY THERE IS NO CO2 READING HERE
+ *  The BME688 can report a CO2-EQUIVALENT, but only through BSEC's IAQ mode,
+ *  and only after that algorithm completes an internal run-in. Measured on a
+ *  node that tried: fourteen scheduled IAQ windows, first at 15 minutes and
+ *  then at 30, produced no value at all - BSEC never reached run-in, because
+ *  every return to scan mode discards the progress. Reaching it appears to
+ *  require running IAQ CONTINUOUSLY, which costs the fingerprint entirely.
+ *
+ *  So this firmware does not pretend. It records smell and leaves CO2 alone.
+ *  If you want CO2 in a hive, an SCD41 on the same two wires measures it
+ *  properly with an NDIR sensor and does not compete for the heater.
+ *
+ *  (The figure is an inference from VOC patterns in any case, not a
+ *  measurement. Losing it costs less than it sounds like.)
+ *
+ *  v1.1.0
  * =============================================================================
  */
 
@@ -57,7 +72,7 @@
 #define WIFI_SSID     "YOUR_WIFI"
 #define WIFI_PASS     "YOUR_PASSWORD"
 #define NODE_NAME     "bme688-nose"     // also the mDNS/host name
-#define FW_VERSION    "1.0.0"
+#define FW_VERSION    "1.1.0"
 
 #define I2C_SDA       21
 #define I2C_SCL       13
@@ -583,7 +598,9 @@ static void handleStatus() {
   char buf[320];
   snprintf(buf, sizeof(buf),
     "{\"ok\":true,\"node\":\"%s\",\"fw\":\"%s\",\"sensor\":%s,\"addr\":\"0x%02X\","
-    "\"scans\":%lu,\"in_ring\":%u,\"uptime_s\":%lu,\"heap\":%lu,\"rssi\":%d}",
+    "\"scans\":%lu,\"in_ring\":%u,\"uptime_s\":%lu,\"heap\":%lu,\"rssi\":%d,"
+    "\"co2\":null,\"co2_note\":\"not measured: BSEC needs continuous IAQ to emit a "
+    "CO2-equivalent, which would cost the fingerprint. Fit an SCD41 for real CO2.\"}",
     NODE_NAME, FW_VERSION, g_ok ? "true" : "false", g_addr,
     (unsigned long)g_seq, g_count, (unsigned long)((millis() - g_bootMs) / 1000UL),
     (unsigned long)ESP.getFreeHeap(), (int)WiFi.RSSI());

@@ -9,8 +9,6 @@ board's address and it is all there.
 
 ![wiring](docs/wiring.svg)
 
-![the page the board serves](../docs/img/nose-page.png)
-
 ## What it records
 
 The BME688's gas element sits on a heater that steps through ten temperatures, about
@@ -73,3 +71,16 @@ have it.
 ## Licence
 
 MIT. Do what you like with it.
+
+### Why there is no CO₂ reading
+
+The BME688 can report a CO₂-*equivalent*, but only through BSEC's IAQ mode, and only after
+that algorithm completes an internal run-in. A node that tried ran fourteen scheduled IAQ
+windows — first at 15 minutes, then at 30 — and produced **no value at all**: every return
+to scan mode discards the run-in progress. Getting there appears to need IAQ running
+continuously, which costs the fingerprint entirely.
+
+So this firmware does not offer CO₂, rather than offering a number that is usually stale.
+If you want CO₂ in a hive, fit an **SCD41** on the same two wires: it measures CO₂ with an
+NDIR sensor instead of inferring it from VOC patterns, and does not compete for the heater.
+

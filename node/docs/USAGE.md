@@ -75,3 +75,12 @@ request or attach it to a submission issue.
 
 Labels survive a reboot; scans do not — the ring is in RAM. Export anything you want to
 keep before power-cycling the board.
+
+## CO₂
+
+There is none, deliberately. The BME688's CO₂-equivalent needs BSEC's IAQ mode running
+continuously to produce anything, which would mean giving up the fingerprint. Fourteen
+scheduled windows on a real node produced nothing at all before that was understood.
+
+If you want CO₂ alongside smell, add an **SCD41** on the same SDA/SCL pair at address 0x62.
+It is a true NDIR measurement, it runs independently, and the fingerprint keeps scanning.
