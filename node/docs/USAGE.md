@@ -30,8 +30,11 @@ useless for saying what.
 clusters. This is the most useful part before any training exists: if a new pattern
 starts appearing, something changed, even though nothing has been taught yet.
 
-**Settled scans only** — leave this on. It hides the first scan after each rest, which
-reads several times high because the sensing surface recovered during the pause.
+**Settled scans only** — leave this on. It keeps one scan per burst, the last before the
+rest. Dropping just the first scan is not enough: resistance climbs through the *whole*
+burst as the surface recovers — measured on one node, 10368 kΩ at position 3 against
+13152 kΩ at position 5, 27 % apart with nothing in the air changing. Averaging a varying
+mix of positions puts spikes in any trend built from it.
 
 ## Exporting
 
@@ -59,7 +62,7 @@ expect.
 
 ## Contributing
 
-The export format matches the [Apiary Nose](../..)
+The export format matches the [Apiary Nose](https://github.com/winreboot/apiary-nose)
 dataset. Validate a file with that repository's `tools/validate.py`, then open a pull
 request or attach it to a submission issue.
 

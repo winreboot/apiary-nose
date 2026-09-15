@@ -86,19 +86,34 @@ Keep `site.region` coarse. Region and climate zone, never an address.
 
 ## `burst_pos` - the variable that will fool you
 
-The BME688 under BSEC does not scan continuously. It runs a burst of scans about
-11 s apart, then rests for roughly a minute and a half. During the rest the sensing
-surface recovers, so **the first scan after a pause reads about ten times higher** than
-the last scan before it, and the scans between decay toward equilibrium.
+The BME688 under BSEC does not scan continuously. It runs a burst of scans about 11 s
+apart, then rests for roughly a minute and a half. During the rest the sensing surface
+recovers, so resistance is **highest at the start of a burst and falls through it** - and
+the effect is not confined to the first scan.
 
-Measured on one node: bursts of five scans, 150 s cycle, peak-to-trough ratio ~10x.
+Measured on a running node: **10368 kΩ at burst position 3 against 13152 kΩ at position 5**
+- 27 % apart, in the same burst, with nothing in the air changing. That is larger than most
+smells produce.
 
-That swing is larger than most smells produce. A model trained without it learns
-"where in the burst am I" as readily as "what is in the air", and its accuracy
-collapses on anyone else's cadence. So every scan carries `burst_pos`:
+So every scan carries `burst_pos`:
 
-- **1** - first scan after a rest. Highest resistances. Not comparable with the rest.
-- **2, 3, ...** - progressively settled.
+- **1** - first scan after a rest. The most extreme, and never comparable with the rest.
+- **2, 3, 4, ...** - progressively settled, but still climbing.
 
-Use it as an input feature, or filter to `burst_pos >= 2` before training. Do not
-silently average across positions.
+### How to use it
+
+**Do not** simply drop position 1 and average the rest. A mixed bag of positions gives a
+different answer depending on which mix a given window happened to contain, which puts
+spikes in any trend built from it. (This project made exactly that mistake first.)
+
+Do one of these instead:
+
+- **Take one position consistently** - the last scan of each burst is the most equilibrated,
+  and is what the reference firmware uses for trends and baselines. A burst's last scan is
+  the one whose successor has a lower or equal `burst_pos`.
+- **Use `burst_pos` as an input feature** and let the model account for it.
+- **Compare like with like**: position 3 against position 3, never 3 against 5.
+
+Raw per-scan views should still show everything, including the climb. That is what raw
+means, and the correction belongs at analysis time, not in the recording.
+
